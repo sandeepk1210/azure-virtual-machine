@@ -1,5 +1,7 @@
 azure-vm-module/
 ├── main.tf
+├── key-vault.tf
+├── network.tf
 ├── variables.tf
 ├── outputs.tf
 └── README.md
@@ -11,6 +13,7 @@ This Terraform module creates one or more Azure Windows Virtual Machines with th
 - Uses an existing resource group.
 - Stores the VM admin password in an Azure Key Vault secret.
 - Provisions each VM with IIS and creates a `Default.html` file.
+- Enable Encryption at Rest : To enable encryption at rest for an Azure VM, we need to use a Disk Encryption Set and ensure the OS and data disks are encrypted using the Azure Key Vault keys.
 
 ## Usage
 
