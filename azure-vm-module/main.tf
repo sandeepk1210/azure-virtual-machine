@@ -35,18 +35,18 @@ resource "azurerm_windows_virtual_machine" "vm" {
 }
 
 # Custom Script Extension to install IIS and create Default.html
-# resource "azurerm_virtual_machine_extension" "iis_extension" {
-#   count                = var.vm_count
-#   name                 = "iis-extension-${count.index + 1}"
-#   virtual_machine_id   = azurerm_windows_virtual_machine.vm[count.index].id
-#   publisher            = "Microsoft.Compute"
-#   type                 = "CustomScriptExtension"
-#   type_handler_version = "1.10"
+resource "azurerm_virtual_machine_extension" "iis_extension" {
+  count                = var.vm_count
+  name                 = "iis-extension-${count.index + 1}"
+  virtual_machine_id   = azurerm_windows_virtual_machine.vm[count.index].id
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.10"
 
-#   protected_settings = jsonencode({
-#     commandToExecute = "powershell -command \"Install-WindowsFeature -name Web-Server; New-Item -Path 'C:\\inetpub\\wwwroot\\Default.html' -ItemType File -Force; Add-Content -Path 'C:\\inetpub\\wwwroot\\Default.html' -Value '<html><body><h1>Hello from VM ${(count.index + 1)}</h1></body></html>'\""
-#   })
-# }
+  protected_settings = jsonencode({
+    commandToExecute = "powershell -command \"Install-WindowsFeature -name Web-Server; New-Item -Path 'C:\\inetpub\\wwwroot\\Default.html' -ItemType File -Force; Add-Content -Path 'C:\\inetpub\\wwwroot\\Default.html' -Value '<html><body><h1>Hello from VM ${(count.index + 1)}</h1></body></html>'\""
+  })
+}
 
 # Disk Encryption Set using Key Vault Key
 # A Disk Encryption Set provides centralized control over encryption for managed disks in Azure. 
